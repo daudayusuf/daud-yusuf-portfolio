@@ -1,0 +1,14 @@
+# Resume source file (not part of the deployed site)
+Dauda_Yusuf_Olamilekan_Resume_V4 (1).html
+/InShot_20230805_040745016.jpg
+
+# Video files — hosted on YouTube, not committed to git
+assets/videos/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.sublime-workspace
