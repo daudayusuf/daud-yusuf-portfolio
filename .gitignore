@@ -14,3 +14,7 @@ Thumbs.db
 *.sublime-workspace
 
 .vercel
+
+# Source screenshot folders (processed copies live in images/smm/results/)
+Screenshots/
+.firecrawl/

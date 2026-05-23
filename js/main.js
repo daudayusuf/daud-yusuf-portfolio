@@ -154,4 +154,82 @@
 
   statNumbers.forEach(el => statObserver.observe(el));
 
+  /* ── 8. SMM CAROUSEL ────────────────────────────────────────── */
+  (function initSmmCarousel() {
+    const track    = document.getElementById('smmTrack');
+    const dotsWrap = document.getElementById('smmDots');
+    const wrap     = document.getElementById('smmCarousel')?.closest('.smm-carousel-wrap');
+    if (!track) return;
+
+    const slides = track.querySelectorAll('.smm-carousel__slide');
+    const total  = slides.length;
+    let current  = 0;
+    let startX   = 0;
+    let isDragging = false;
+    let autoTimer;
+
+    function goTo(idx) {
+      current = (idx + total) % total;
+      track.style.transform = `translateX(-${current * 100}%)`;
+      dotsWrap.querySelectorAll('.smm-carousel__dot')
+        .forEach((d, i) => d.classList.toggle('active', i === current));
+    }
+
+    function startAuto() {
+      autoTimer = setInterval(() => goTo(current + 1), 5000);
+    }
+
+    function stopAuto() {
+      clearInterval(autoTimer);
+    }
+
+    document.getElementById('smmPrev')
+      ?.addEventListener('click', () => { stopAuto(); goTo(current - 1); startAuto(); });
+    document.getElementById('smmNext')
+      ?.addEventListener('click', () => { stopAuto(); goTo(current + 1); startAuto(); });
+
+    /* Mouse drag */
+    track.addEventListener('mousedown', e => {
+      isDragging = true;
+      startX = e.clientX;
+      stopAuto();
+    });
+    document.addEventListener('mouseup', e => {
+      if (!isDragging) return;
+      isDragging = false;
+      const dx = e.clientX - startX;
+      if (dx < -40) goTo(current + 1);
+      else if (dx > 40) goTo(current - 1);
+      startAuto();
+    });
+    document.addEventListener('mousemove', e => {
+      if (!isDragging) return;
+      e.preventDefault();
+    });
+
+    /* Touch swipe */
+    track.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+      stopAuto();
+    }, { passive: true });
+    track.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - startX;
+      if (dx < -40) goTo(current + 1);
+      else if (dx > 40) goTo(current - 1);
+      startAuto();
+    });
+
+    /* Dot nav */
+    dotsWrap.querySelectorAll('.smm-carousel__dot')
+      .forEach((dot, i) => dot.addEventListener('click', () => {
+        stopAuto(); goTo(i); startAuto();
+      }));
+
+    /* Pause on hover */
+    wrap?.addEventListener('mouseenter', stopAuto);
+    wrap?.addEventListener('mouseleave', startAuto);
+
+    startAuto();
+  })();
+
 })();
