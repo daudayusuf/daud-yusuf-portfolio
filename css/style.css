@@ -928,7 +928,7 @@ ul { list-style: none; }
 
 /* ── Ultra-Modern Spotlight Slider ──────────────────── */
 .smm-spotlight {
-  max-width: 820px;
+  max-width: 380px;
   margin: 0 auto;
   user-select: none;
 }
