@@ -154,14 +154,16 @@
 
   statNumbers.forEach(el => statObserver.observe(el));
 
-  /* ── 8. SMM CAROUSEL ────────────────────────────────────────── */
+  /* ── 8. SMM SPOTLIGHT SLIDER ────────────────────────────────── */
   (function initSmmCarousel() {
     const track    = document.getElementById('smmTrack');
     const dotsWrap = document.getElementById('smmDots');
-    const wrap     = document.getElementById('smmCarousel')?.closest('.smm-carousel-wrap');
+    const progress = document.getElementById('smmProgress');
+    const counter  = document.getElementById('smmCurrent');
+    const spotlight = document.querySelector('.smm-spotlight');
     if (!track) return;
 
-    const slides = track.querySelectorAll('.smm-carousel__slide');
+    const slides = Array.from(track.querySelectorAll('.smm-slider__slide'));
     const total  = slides.length;
     let current  = 0;
     let startX   = 0;
@@ -170,9 +172,21 @@
 
     function goTo(idx) {
       current = (idx + total) % total;
+
       track.style.transform = `translateX(-${current * 100}%)`;
-      dotsWrap.querySelectorAll('.smm-carousel__dot')
-        .forEach((d, i) => d.classList.toggle('active', i === current));
+
+      slides.forEach((s, i) => s.classList.toggle('is-active', i === current));
+
+      dotsWrap.querySelectorAll('.smm-slider__dot')
+        .forEach((d, i) => d.classList.toggle('is-active', i === current));
+
+      if (counter) counter.textContent = String(current + 1).padStart(2, '0');
+
+      if (progress) {
+        progress.classList.remove('running');
+        void progress.offsetWidth; /* force reflow to restart animation */
+        progress.classList.add('running');
+      }
     }
 
     function startAuto() {
@@ -181,6 +195,7 @@
 
     function stopAuto() {
       clearInterval(autoTimer);
+      if (progress) progress.classList.remove('running');
     }
 
     document.getElementById('smmPrev')
@@ -188,7 +203,7 @@
     document.getElementById('smmNext')
       ?.addEventListener('click', () => { stopAuto(); goTo(current + 1); startAuto(); });
 
-    /* Mouse drag */
+    /* Mouse drag on track */
     track.addEventListener('mousedown', e => {
       isDragging = true;
       startX = e.clientX;
@@ -203,8 +218,7 @@
       startAuto();
     });
     document.addEventListener('mousemove', e => {
-      if (!isDragging) return;
-      e.preventDefault();
+      if (isDragging) e.preventDefault();
     });
 
     /* Touch swipe */
@@ -220,15 +234,16 @@
     });
 
     /* Dot nav */
-    dotsWrap.querySelectorAll('.smm-carousel__dot')
+    dotsWrap.querySelectorAll('.smm-slider__dot')
       .forEach((dot, i) => dot.addEventListener('click', () => {
         stopAuto(); goTo(i); startAuto();
       }));
 
     /* Pause on hover */
-    wrap?.addEventListener('mouseenter', stopAuto);
-    wrap?.addEventListener('mouseleave', startAuto);
+    spotlight?.addEventListener('mouseenter', stopAuto);
+    spotlight?.addEventListener('mouseleave', startAuto);
 
+    goTo(0);
     startAuto();
   })();
 

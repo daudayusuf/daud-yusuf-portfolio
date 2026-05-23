@@ -15,6 +15,7 @@ Thumbs.db
 
 .vercel
 
-# Source screenshot folders (processed copies live in images/smm/results/)
-Screenshots/
+# Source screenshot / design folders (processed copies live in images/smm/)
+/Screenshots/
+/Carousels/
 .firecrawl/
