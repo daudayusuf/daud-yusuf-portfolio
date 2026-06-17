@@ -686,7 +686,7 @@ ul { list-style: none; }
    ================================================================ */
 .skills__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 40px;
 }
 
@@ -1081,7 +1081,7 @@ ul { list-style: none; }
   .about__grid { grid-template-columns: 1fr; gap: 48px; }
   .about__stats { grid-template-columns: repeat(4, 1fr); }
 
-  .skills__grid { grid-template-columns: 1fr; }
+  .skills__grid { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 768px) {
