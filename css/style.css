@@ -4,7 +4,7 @@
    ================================================================ */
 
 /* ── GOOGLE FONTS ─────────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Andika:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 /* ── VARIABLES ────────────────────────────────────────────────── */
 :root {
@@ -21,8 +21,8 @@
   --rule:         #D9D9D9;
   --white:        #FFFFFF;
 
-  --font-heading: 'Playfair Display', serif;
-  --font-body:    'Source Sans Pro', sans-serif;
+  --font-heading: 'Andika', sans-serif;
+  --font-body:    'Andika', sans-serif;
 
   --nav-h:        72px;
   --container:    1160px;
